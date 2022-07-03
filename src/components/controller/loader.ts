@@ -1,13 +1,14 @@
 interface GetR {
     endpoint: string,
-    options: {
-        sources?: string
+    options?: {
+        sources?: string,
     }
 }
 enum ResponseStatys {
     status401 = 401,
     status404 = 404
 }
+
 
 class Loader {
     baseLink: string;
@@ -17,13 +18,13 @@ class Loader {
         this.options = options;
     }
 
-    getResp(
+    getResp<T>(
         { endpoint, options = {} }: GetR,
-        callback = () => {
+        callback: (data: T) => void = () => {
             console.error('No callback for GET response');
         }
     ) {
-        this.load('GET', endpoint, callback, options);
+        this.load<T>('GET', endpoint, callback, options);
 
     }
 
@@ -33,35 +34,27 @@ class Loader {
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }
-
         return res;
     }
 
     makeUrl(options: { apiKey: string }, endpoint: string) {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
-        const boba = {
-            key1: 1,
-            key2: 2,
-        }
-
         const keys = Object.keys(urlOptions) as Array<keyof { apiKey: string }>
-
         keys.forEach((key) => {
-            console.log(urlOptions)
             url += `${key}=${urlOptions[key]}&`;
         });
 
         return url.slice(0, -1);
     }
 
-    load(method: string, endpoint: string, callback: (val: string) => void, options = {}) {
+    load<T>(method: string, endpoint: string, callback: (val: T) => void, options = {}) {
 
         fetch(this.makeUrl(options as never, endpoint), { method })
             .then(this.errorHandler)
-            .then((res) => res.json())
+            .then((res: Response) => res.json())
 
-            .then((data) => callback(data))
+            .then(callback)
             .catch((err) => console.error(err));
     }
 

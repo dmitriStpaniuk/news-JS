@@ -3,9 +3,11 @@
     flex-wrap: nowrap;
     width: 100%;
     height: 120px;
-    overflow: auto;
+    /* overflow: auto; */
     align-items: center;
     font: 300 1em 'Fira Sans', sans-serif;
+    position: relative;
+    z-index: 1;
 }
 
 .source__item {
@@ -31,4 +33,24 @@
 .source__item-name {
     font-weight: 400;
     white-space: nowrap;
+}
+.dropdown-content {
+    display: none;
+
+}
+.dropdown__item {
+   margin: 10px;
+
+}
+.dropdown__item:hover {
+  color:brown
+}
+
+.source__item:hover .dropdown-content {
+    display: block;
+    padding: 5px;
+    position: absolute;
+    background-color: #575656;
+    min-width: 160px;
+    z-index: 2;
 }
