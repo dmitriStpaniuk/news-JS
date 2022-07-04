@@ -9,13 +9,13 @@ class App {
         this.view = new AppView();
     }
 
-    start() {
+start() {
         document
             .querySelector('.sources')
             ?.addEventListener('click', (e) => this.controller.getNews(e as MouseEvent, (data) => this.view.drawNews(data)));
-            this.controller.getSources((data) => this.view.drawSources(data));
-            
+            this.controller.getSources((data) => {
+                this.view.drawSources(data)
+            });
     }
 }
-
 export default App;

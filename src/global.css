@@ -1,11 +1,14 @@
 body {
     color: #fff;
-    background: #17181c;
+    background: #545b79;
     font-family: sans-serif;
 }
 
 header {
     padding: 10px 30px;
+    display: flex;
+	justify-content: space-between;
+    align-items: center;
 }
 
 header h1 {
@@ -18,6 +21,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    position: relative;
+    z-index: 0;
 }
 footer .copyright {
     font-size: 14px;
@@ -39,6 +44,10 @@ footer .footer__logo{
     height: 30%;
     width: 15%;
     background-color: rgb(105, 101, 101);
+}
+.footer__git{
+    position: relative;
+    z-index: 0;
 }
 .footer__git a{
     color: #fff;
